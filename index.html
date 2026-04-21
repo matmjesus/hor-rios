@@ -10,7 +10,7 @@
             --cor-tarde: #f4a261;
             --cor-noite: #264653;
             --bg-site: #f0f2f5;
-            --bg-exibicao: rgba(255, 255, 255, 0.8); 
+            --bg-exibicao: rgba(255, 255, 255, 0.85); 
         }
 
         * {
@@ -24,6 +24,7 @@
             background-color: var(--bg-site);
             overflow: hidden;
             height: 100vh;
+            width: 100vw;
         }
 
         /* --- TELA 1: MENU --- */
@@ -69,26 +70,25 @@
         .btn-tarde { background-color: var(--cor-tarde); color: white; }
         .btn-noite { background-color: var(--cor-noite); color: #e9c46a; }
 
-        /* --- TELA 2: EXIBIÇÃO --- */
+        /* --- TELA 2: EXIBIÇÃO (SISTEMA NATURAL) --- */
         #tela-imagem {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
             background-color: var(--bg-exibicao);
             backdrop-filter: blur(15px); 
             -webkit-backdrop-filter: blur(15px);
             z-index: 100;
         }
 
-        /* Contentor que organiza imagem e botão em coluna */
         .wrapper-imagem {
             width: 100%;
             height: 100%;
             display: flex;
-            flex-direction: column; /* Coloca um debaixo do outro */
+            flex-direction: column; /* Imagem em cima, botão em baixo */
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -96,53 +96,46 @@
 
         #imagem-exibida {
             max-width: 100%;
-            max-height: 75vh; /* Reserva espaço para o botão em baixo */
-            object-fit: contain;
-            border-radius: 10px;
+            max-height: 70vh; /* Garante espaço para o botão em qualquer orientação */
+            object-fit: contain; /* Não corta a imagem */
+            border-radius: 12px;
             opacity: 0;
-            margin-bottom: 20px; /* Espaço entre imagem e botão */
+            margin-bottom: 25px; /* Espaço entre imagem e botão */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* NOVO BOTÃO FECHAR ABAIXO DA IMAGEM */
         .btn-fechar-baixo {
-            padding: 12px 40px;
+            padding: 14px 45px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             color: #444;
-            background: rgba(255, 255, 255, 0.9);
+            background: white;
             border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 12px; /* Retângulo com cantos arredondados */
+            border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: 0.2s;
-            opacity: 0; /* Começa invisível para animar junto */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn-fechar-baixo:active {
-            background: #eee;
-            transform: scale(0.95);
-        }
-
-        /* ANIMAÇÃO DE ENTRADA (Imagem e Botão) */
+        /* ANIMAÇÃO DE ENTRADA */
         .animar-entrada {
-            animation: surgir 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            animation: surgir 0.5s ease-out forwards;
         }
 
         @keyframes surgir {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* AJUSTE PAISAGEM MOBILE (Rotação preserva a ordem Imagem -> Botão) */
-        @media screen and (orientation: portrait) {
+        /* AJUSTE PARA MODO PAISAGEM (Landscape) */
+        @media (orientation: landscape) {
+            #imagem-exibida {
+                max-height: 60vh; /* Reduz um pouco a altura para o botão caber melhor sem scroll */
+            }
             .wrapper-imagem {
-                transform: rotate(90deg);
-                width: 100vh;
-                height: 100vw;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                translate: -50% -50%;
+                padding: 10px;
             }
         }
     </style>
@@ -163,7 +156,7 @@
     <div id="tela-imagem">
         <div class="wrapper-imagem">
             <img id="imagem-exibida" src="" alt="Horário">
-            <button id="btn-fechar" class="btn-fechar-baixo" onclick="voltarParaMenu()">FECHAR</button>
+            <button id="btn-fechar" class="btn-fechar-baixo" onclick="voltarParaMenu()">Fechar</button>
         </div>
     </div>
 
@@ -179,7 +172,6 @@
             img.src = src;
             tela.style.display = 'block';
             
-            // Ativa a animação nos dois elementos
             setTimeout(() => {
                 img.classList.add('animar-entrada');
                 btn.classList.add('animar-entrada');
