@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horários</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        /* Estilos Específicos para cada período */
+        .btn-manha {
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+        }
+
+        .btn-tarde {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-noite {
+            background: linear-gradient(135deg, #2c3e50, #8e44ad);
+            box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        #mensagem {
+            margin-top: 25px;
+            font-size: 1.1rem;
+            color: #555;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Horários</h1>
+        
+        <div class="button-group">
+            <button class="btn btn-manha" onclick="atualizar('Bom dia! O sol já nasceu.')">Manhã</button>
+            <button class="btn btn-tarde" onclick="atualizar('Boa tarde! Hora do café.')">Tarde</button>
+            <button class="btn btn-noite" onclick="atualizar('Boa noite! Bom descanso.')">Noite</button>
+        </div>
+
+        <div id="mensagem">Escolha um período...</div>
+    </div>
+
+    <script>
+        function atualizar(texto) {
+            document.getElementById('mensagem').innerText = texto;
+        }
+    </script>
+
+</body>
+</html>
